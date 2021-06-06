@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard", "KanbanBoard.csproj", "{1E8C0D42-60EA-4C8F-A6E7-A5C419AA17F6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{907BB789-85D5-4013-A1DF-E3443394C688} = {907BB789-85D5-4013-A1DF-E3443394C688}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "..\IdentityServer\IdentityServer.csproj", "{907BB789-85D5-4013-A1DF-E3443394C688}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E8C0D42-60EA-4C8F-A6E7-A5C419AA17F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E8C0D42-60EA-4C8F-A6E7-A5C419AA17F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E8C0D42-60EA-4C8F-A6E7-A5C419AA17F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E8C0D42-60EA-4C8F-A6E7-A5C419AA17F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{907BB789-85D5-4013-A1DF-E3443394C688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907BB789-85D5-4013-A1DF-E3443394C688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907BB789-85D5-4013-A1DF-E3443394C688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907BB789-85D5-4013-A1DF-E3443394C688}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB066869-66C9-4990-A207-05EDADA1EC7D}
+	EndGlobalSection
+EndGlobal
