@@ -3,13 +3,15 @@ on:
   push:
     branches:
     - main
+    paths:
+    - "KanbanBoard/**"
 env:
   AZURE_WEBAPP_NAME: KanbanBoard_backend
   AZURE_WEBAPP_PACKAGE_PATH: ./publish
   AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.KanbanBoard20210606175629_8c93 }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 5.0.x
-  WORKING_DIRECTORY: .
+  WORKING_DIRECTORY: KanbanBoard
 jobs:
   build-and-deploy:
     runs-on: windows-latest
