@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+defaults:
+  run:
+    working-directory: IdentityServer
+
 jobs:
   build-and-deploy:
     runs-on: windows-latest
