@@ -11,6 +11,7 @@ using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
+using Azure.Identity;
 
 namespace IdentityServer
 {
@@ -72,6 +73,13 @@ namespace IdentityServer
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+.ConfigureAppConfiguration((context, config) =>
+{
+var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+config.AddAzureKeyVault(
+keyVaultEndpoint,
+new DefaultAzureCredential());
+})
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
