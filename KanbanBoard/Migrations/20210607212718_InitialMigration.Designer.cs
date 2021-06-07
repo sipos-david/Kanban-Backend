@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbanBoard.Migrations
 {
     [DbContext(typeof(KanbanBoardDbContext))]
-    [Migration("20210504152751_CommentRemovedNumber")]
-    partial class CommentRemovedNumber
+    [Migration("20210607212718_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,37 @@ namespace KanbanBoard.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.ColumnDto", b =>
+            modelBuilder.Entity("DbProjectDbUser", b =>
+                {
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ProjectsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("DbProjectDbUser");
+                });
+
+            modelBuilder.Entity("DbTaskDbUser", b =>
+                {
+                    b.Property<int>("TasksId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("TasksId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("DbTaskDbUser");
+                });
+
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbColumn", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +74,7 @@ namespace KanbanBoard.Migrations
                     b.ToTable("Columns");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.CommentDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbComment", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +106,7 @@ namespace KanbanBoard.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.ProjectDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbProject", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,7 +121,7 @@ namespace KanbanBoard.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.TableDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbTable", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +141,7 @@ namespace KanbanBoard.Migrations
                     b.ToTable("Tables");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.TaskDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbTask", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -137,7 +167,7 @@ namespace KanbanBoard.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.UserDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -333,39 +363,39 @@ namespace KanbanBoard.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ProjectDtoUserDto", b =>
+            modelBuilder.Entity("DbProjectDbUser", b =>
                 {
-                    b.Property<int>("ProjectsId")
-                        .HasColumnType("int");
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbProject", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ProjectsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ProjectDtoUserDto");
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TaskDtoUserDto", b =>
+            modelBuilder.Entity("DbTaskDbUser", b =>
                 {
-                    b.Property<int>("TasksId")
-                        .HasColumnType("int");
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbTask", null)
+                        .WithMany()
+                        .HasForeignKey("TasksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("TasksId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("TaskDtoUserDto");
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.ColumnDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbColumn", b =>
                 {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.TableDto", "Table")
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbTable", "Table")
                         .WithMany("Columns")
                         .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -374,15 +404,15 @@ namespace KanbanBoard.Migrations
                     b.Navigation("Table");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.CommentDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbComment", b =>
                 {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.UserDto", "Author")
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbUser", "Author")
                         .WithMany("Comments")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.TaskDto", "Task")
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbTask", "Task")
                         .WithMany("Comments")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -393,9 +423,9 @@ namespace KanbanBoard.Migrations
                     b.Navigation("Task");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.TableDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbTable", b =>
                 {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.ProjectDto", "Project")
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbProject", "Project")
                         .WithMany("Tables")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -404,9 +434,9 @@ namespace KanbanBoard.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.TaskDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbTask", b =>
                 {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.ColumnDto", "Column")
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbColumn", "Column")
                         .WithMany("Tasks")
                         .HasForeignKey("ColumnId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -426,7 +456,7 @@ namespace KanbanBoard.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.UserDto", null)
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -435,7 +465,7 @@ namespace KanbanBoard.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.UserDto", null)
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -450,7 +480,7 @@ namespace KanbanBoard.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.UserDto", null)
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -459,64 +489,34 @@ namespace KanbanBoard.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.UserDto", null)
+                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.DbUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectDtoUserDto", b =>
-                {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.ProjectDto", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.UserDto", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TaskDtoUserDto", b =>
-                {
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.TaskDto", null)
-                        .WithMany()
-                        .HasForeignKey("TasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KanbanBoard.DAL.EfDbContext.DTO.UserDto", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.ColumnDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbColumn", b =>
                 {
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.ProjectDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbProject", b =>
                 {
                     b.Navigation("Tables");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.TableDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbTable", b =>
                 {
                     b.Navigation("Columns");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.TaskDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbTask", b =>
                 {
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.UserDto", b =>
+            modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbUser", b =>
                 {
                     b.Navigation("Comments");
                 });

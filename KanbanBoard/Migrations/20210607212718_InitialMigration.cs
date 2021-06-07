@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace KanbanBoard.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -141,7 +141,7 @@ namespace KanbanBoard.Migrations
             //    });
 
             migrationBuilder.CreateTable(
-                name: "ProjectDtoUserDto",
+                name: "DbProjectDbUser",
                 columns: table => new
                 {
                     ProjectsId = table.Column<int>(type: "int", nullable: false),
@@ -149,15 +149,15 @@ namespace KanbanBoard.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectDtoUserDto", x => new { x.ProjectsId, x.UsersId });
+                    table.PrimaryKey("PK_DbProjectDbUser", x => new { x.ProjectsId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_ProjectDtoUserDto_AspNetUsers_UsersId",
+                        name: "FK_DbProjectDbUser_AspNetUsers_UsersId",
                         column: x => x.UsersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProjectDtoUserDto_Projects_ProjectsId",
+                        name: "FK_DbProjectDbUser_Projects_ProjectsId",
                         column: x => x.ProjectsId,
                         principalTable: "Projects",
                         principalColumn: "Id",
@@ -236,8 +236,7 @@ namespace KanbanBoard.Migrations
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TaskId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false),
+                    EditedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -258,7 +257,7 @@ namespace KanbanBoard.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TaskDtoUserDto",
+                name: "DbTaskDbUser",
                 columns: table => new
                 {
                     TasksId = table.Column<int>(type: "int", nullable: false),
@@ -266,15 +265,15 @@ namespace KanbanBoard.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TaskDtoUserDto", x => new { x.TasksId, x.UsersId });
+                    table.PrimaryKey("PK_DbTaskDbUser", x => new { x.TasksId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_TaskDtoUserDto_AspNetUsers_UsersId",
+                        name: "FK_DbTaskDbUser_AspNetUsers_UsersId",
                         column: x => x.UsersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TaskDtoUserDto_Tasks_TasksId",
+                        name: "FK_DbTaskDbUser_Tasks_TasksId",
                         column: x => x.TasksId,
                         principalTable: "Tasks",
                         principalColumn: "Id",
@@ -324,19 +323,19 @@ namespace KanbanBoard.Migrations
                 column: "TaskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectDtoUserDto_UsersId",
-                table: "ProjectDtoUserDto",
+                name: "IX_DbProjectDbUser_UsersId",
+                table: "DbProjectDbUser",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DbTaskDbUser_UsersId",
+                table: "DbTaskDbUser",
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tables_ProjectId",
                 table: "Tables",
                 column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TaskDtoUserDto_UsersId",
-                table: "TaskDtoUserDto",
-                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_ColumnId",
@@ -365,13 +364,13 @@ namespace KanbanBoard.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "ProjectDtoUserDto");
+                name: "DbProjectDbUser");
 
             migrationBuilder.DropTable(
-                name: "TaskDtoUserDto");
+                name: "DbTaskDbUser");
 
-            //migrationBuilder.DropTable(
-            //    name: "AspNetRoles");
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Tasks");

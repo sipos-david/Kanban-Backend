@@ -36,7 +36,7 @@ namespace KanbanBoard.DAL.Repositories
                     .Include(pr => pr.Users)
                         .Select(p => p)
                         .Where(p => p.Name != null && p.Name.Contains(name))
-                        .ToListAsync());
+                            .ToListAsync());
         }
 
         public async Task<ICollection<Project>> GetAllProjectsAsync()
