@@ -16,5 +16,6 @@ namespace KanbanBoard.Services
         Task<Project?> RemoveTableAsync(int id, int table);
         Task<Project?> AddUsersByIdAsync(int id, List<string> users);
         Task<Project?> RemoveUserByIdAsync(int id, string user);
+        Task<ICollection<Project>> GetAllByNameAsync(string name);
     }
 }

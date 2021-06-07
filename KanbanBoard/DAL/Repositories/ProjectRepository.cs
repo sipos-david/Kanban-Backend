@@ -4,6 +4,7 @@ using KanbanBoard.DAL.EfDbContext.DTO;
 using KanbanBoard.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace KanbanBoard.DAL.Repositories
@@ -24,6 +25,18 @@ namespace KanbanBoard.DAL.Repositories
             var _project = await context.Projects.AddAsync(mapper.Map<DbProject>(project));
             await context.SaveChangesAsync();
             return mapper.Map<Project>(_project.Entity);
+        }
+
+        public async Task<ICollection<Project>> GetAllByNameAsync(string name)
+        {
+
+            return mapper.Map<List<Project>>(
+                await context.Projects
+                    .Include(p => p.Tables)
+                    .Include(pr => pr.Users)
+                        .Select(p => p)
+                        .Where(p => p.Name != null && p.Name.Contains(name))
+                        .ToListAsync());
         }
 
         public async Task<ICollection<Project>> GetAllProjectsAsync()

@@ -64,6 +64,11 @@ namespace KanbanBoard.Services
             return await projectRepository.GetAllProjectsAsync();
         }
 
+        public async Task<ICollection<Project>> GetAllByNameAsync(string name)
+        {
+            return await projectRepository.GetAllByNameAsync(name);
+        }
+
         public Task<Project?> GetByIdAsync(int id)
         {
             return projectRepository.GetByIdAsync(id);

@@ -13,5 +13,6 @@ namespace KanbanBoard.DAL.Repositories
         Task<Project> AddAsync(Project project);
         Task<Project?> RemoveAsync(int id);
         Task<Project> UpdateAsync(Project project);
+        Task<ICollection<Project>> GetAllByNameAsync(string name);
     }
 }

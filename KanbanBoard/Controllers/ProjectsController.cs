@@ -12,6 +12,7 @@ namespace KanbanBoard.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
     [Authorize]
     public class ProjectsController : ControllerBase
     {
@@ -24,9 +25,25 @@ namespace KanbanBoard.Controllers
 
         // GET: api/<ProjectsController>
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<IEnumerable<Project>> Get()
         {
             return await projectService.GetAllAsync();
+        }
+
+        // GET: api/<ProjectsController>
+        [HttpGet]
+        [MapToApiVersion("1.1")]
+        public async Task<IEnumerable<Project>> Search(string? name = null)
+        {
+            if (name == null)
+            {
+                return await projectService.GetAllAsync();
+            }
+            else 
+            {
+                return await projectService.GetAllByNameAsync(name);
+            }
         }
 
         // GET api/<ProjectsController>/5
