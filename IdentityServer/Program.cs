@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
@@ -37,22 +37,17 @@ namespace IdentityServer
 
             try
             {
-                var seed = args.Contains("/seed");
-                if (seed)
-                {
-                    args = args.Except(new[] { "/seed" }).ToArray();
-                }
-
                 var host = CreateHostBuilder(args).Build();
+                var config = host.Services.GetRequiredService<IConfiguration>();
+
+                var seed = config.GetValue<Boolean>("SeedData");
 
                 if (seed)
                 {
-                    Log.Information("Seeding database...");
-                    var config = host.Services.GetRequiredService<IConfiguration>();
+                    Log.Information("Seeding database..."); 
                     var connectionString = config.GetConnectionString("DefaultConnection");
                     SeedData.EnsureSeedData(connectionString);
                     Log.Information("Done seeding database.");
-                    return 0;
                 }
 
                 Log.Information("Starting host...");
