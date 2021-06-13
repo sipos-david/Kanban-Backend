@@ -33,7 +33,8 @@ namespace IdentityServer
 
             var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
             context.Database.EnsureDeleted();
-            context.Database.Migrate();
+            // context.Database.Migrate();
+            context.Database.EnsureCreated();
 
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var alice = userMgr.FindByNameAsync("alice").Result;
