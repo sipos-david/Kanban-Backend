@@ -31,7 +31,7 @@ namespace KanbanBoard
             {
                 var context = services.GetRequiredService<KanbanBoardDbContext>();
                 context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                context.Database.Migrate();
                 // DbInitializer.Initialize(context);
             }
             catch (Exception ex)

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KanbanBoard.Migrations
 {
     [DbContext(typeof(KanbanBoardDbContext))]
-    [Migration("20210611141514_InitialPostgresMigration")]
-    partial class InitialPostgresMigration
+    [Migration("20210613224211_SeedingMigration")]
+    partial class SeedingMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,6 +72,22 @@ namespace KanbanBoard.Migrations
                     b.HasIndex("TableId");
 
                     b.ToTable("Columns");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            Name = "Col 1",
+                            Number = 0,
+                            TableId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Col 2",
+                            Number = 1,
+                            TableId = 2
+                        });
                 });
 
             modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbComment", b =>
@@ -119,6 +135,18 @@ namespace KanbanBoard.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Projects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Project 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Project 2"
+                        });
                 });
 
             modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbTable", b =>
@@ -139,6 +167,14 @@ namespace KanbanBoard.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Tables");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Name = "Table 1",
+                            ProjectId = 1
+                        });
                 });
 
             modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbTask", b =>
@@ -165,6 +201,32 @@ namespace KanbanBoard.Migrations
                     b.HasIndex("ColumnId");
 
                     b.ToTable("Tasks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 5,
+                            ColumnId = 3,
+                            Description = "Task 1: description...",
+                            Name = "Task 1",
+                            Number = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ColumnId = 3,
+                            Description = "Task 2: description...",
+                            Name = "Task 2",
+                            Number = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ColumnId = 3,
+                            Description = "Task 3: description...",
+                            Name = "Task 3",
+                            Number = 2
+                        });
                 });
 
             modelBuilder.Entity("KanbanBoard.DAL.EfDbContext.DTO.DbUser", b =>
