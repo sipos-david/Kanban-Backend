@@ -33,5 +33,12 @@ namespace KanbanBoard.DAL.Repositories
         {
             return mapper.Map<User>(await context.Users.FindAsync(id));
         }
+
+        public async Task<User> AddAsync(User user)
+        {
+            var _user = await context.Users.AddAsync(mapper.Map<DbUser>(user));
+            await context.SaveChangesAsync();
+            return mapper.Map<User>(_user.Entity);
+        }
     }
 }

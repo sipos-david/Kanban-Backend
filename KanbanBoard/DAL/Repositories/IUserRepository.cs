@@ -10,5 +10,6 @@ namespace KanbanBoard.DAL.Repositories
         Task<ICollection<User>> GetAllUsersAsync();
         Task<User?> GetByIdAsync(string id);
         DbUser? GetUserDtoById(string id);
+        Task<User> AddAsync(User user);
     }
 }

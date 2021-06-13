@@ -8,5 +8,7 @@ namespace KanbanBoard.Services
     {
         Task<ICollection<User>> GetAllAsync();
         Task<User?> GetByIdAsync(string id);
+        Task<bool> IsUserRegistered(string? id);
+        Task<User?> RegisterUser(User user);
     }
 }

@@ -24,7 +24,7 @@ namespace KanbanBoard.DAL.EfDbContext.Converters
                     return user;
                 }
             }
-            return new DbUser();
+            return new DbUser { Id = source.Id, Name = source.Name };
         }
     }
 }
