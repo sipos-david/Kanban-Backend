@@ -1,4 +1,4 @@
-// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 namespace IdentityServer
 {
@@ -44,6 +46,7 @@ namespace IdentityServer
 
             var builder = services.AddIdentityServer(options =>
             {
+                options.IssuerUri = "https://identity_server:443";
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
@@ -59,7 +62,8 @@ namespace IdentityServer
                 .AddAspNetIdentity<ApplicationUser>();
 
             // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+            //builder.AddDeveloperSigningCredential();
+            builder.AddSigningCredential(new X509Certificate2(Path.Combine("../certs", "certificate.pfx"), "1234", X509KeyStorageFlags.DefaultKeySet));
 
             services.AddAuthentication()
                 .AddGoogle(options =>
