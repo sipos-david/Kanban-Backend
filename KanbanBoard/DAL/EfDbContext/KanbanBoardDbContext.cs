@@ -20,6 +20,7 @@ namespace KanbanBoard.DAL.EfDbContext
         {
             base.OnModelCreating(modelBuilder);
 
+            // define tables
             modelBuilder.Entity<DbColumn>()
                 .ToTable("Columns")
                 .HasMany(c => c.Tasks)
@@ -84,6 +85,25 @@ namespace KanbanBoard.DAL.EfDbContext
             modelBuilder.Entity<DbUser>()
                 .HasMany(u => u.Comments)
                 .WithOne(c => c.Author);
+
+            // define seeded data
+            var Project1 = new DbProject { Id = 1, Name = "Project 1" };
+            modelBuilder.Entity<DbProject>().HasData(Project1);
+            modelBuilder.Entity<DbProject>().HasData(new DbProject { Id = 2, Name = "Project 2" });
+
+            var Table1 = new { Id = 2, Name = "Table 1", ProjectId = Project1.Id };
+            modelBuilder.Entity<DbTable>().HasData(Table1);
+
+            var Col1 = new { Id = 3, Name = "Col 1", Number = 0, TableId = Table1.Id };
+            modelBuilder.Entity<DbColumn>().HasData(Col1);
+            modelBuilder.Entity<DbColumn>().HasData(new { Id = 4, Name = "Col 2", Number = 1, TableId = Table1.Id });
+
+            var Task1 = new { Id = 5, ColumnId = Col1.Id, Name = "Task 1", Number = 0, Description = "Task 1: description..." };
+            var Task2 = new { Id = 6, ColumnId = Col1.Id, Name = "Task 2", Number = 1, Description = "Task 2: description..." };
+            var Task3 = new { Id = 7, ColumnId = Col1.Id, Name = "Task 3", Number = 2, Description = "Task 3: description..." };
+            modelBuilder.Entity<DbTask>().HasData(Task1);
+            modelBuilder.Entity<DbTask>().HasData(Task2);
+            modelBuilder.Entity<DbTask>().HasData(Task3);
         }
     }
 }
