@@ -1,13 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using KanbanBoard.Models;
-using System.Collections.Generic;
 using KanbanBoard.DAL.EfDbContext.DTO;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KanbanBoard.DAL.EfDbContext
 {
-    public class KanbanBoardDbContext : IdentityDbContext<DbUser>
+    public class KanbanBoardDbContext : DbContext
     {
         public KanbanBoardDbContext(DbContextOptions<KanbanBoardDbContext> options) : base(options)
         {
@@ -18,6 +14,7 @@ namespace KanbanBoard.DAL.EfDbContext
         public DbSet<DbProject> Projects { get; set; } = default!;
         public DbSet<DbTable> Tables { get; set; } = default!;
         public DbSet<DbTask> Tasks { get; set; } = default!;
+        public DbSet<DbUser> Users { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,7 +73,17 @@ namespace KanbanBoard.DAL.EfDbContext
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<DbUser>()
-                .ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
+                .ToTable("Users")
+                .HasMany(u => u.Tasks)
+                .WithMany(t => t.Users);
+            modelBuilder.Entity<DbUser>()
+                .HasKey(e => e.Id);
+            modelBuilder.Entity<DbUser>()
+                .HasMany(u => u.Projects)
+                .WithMany(p => p.Users);
+            modelBuilder.Entity<DbUser>()
+                .HasMany(u => u.Comments)
+                .WithOne(c => c.Author);
         }
     }
 }

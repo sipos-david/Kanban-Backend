@@ -35,7 +35,7 @@ namespace KanbanBoard.DAL.EfDbContext
 
             CreateMap<DbUser, User>()
                 .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Name, src => src.MapFrom(src => src.UserName))
+                .ForMember(dest => dest.Name, src => src.MapFrom(src => src.Name))
                 .ForAllOtherMembers(x => x.Ignore());
             CreateMap<User, DbUser>()
                 .ConvertUsing<UserConverter>();
