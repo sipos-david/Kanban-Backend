@@ -48,8 +48,8 @@ namespace KanbanBoard
                 .AddJwtBearer(options =>
                 {
                     // base-address of your identityserver
-                    options.Authority = "https://localhost:5443";
-
+                    options.Authority = "http://identity_server:80";
+                    options.RequireHttpsMetadata = false;
                     // if you are using API resources, you can specify the name here
                     options.Audience = "kanbanboard";
 
