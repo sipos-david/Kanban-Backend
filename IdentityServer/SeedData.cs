@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
@@ -22,7 +22,7 @@ namespace IdentityServer
             var services = new ServiceCollection();
             services.AddLogging();
             services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(connectionString));
+               options.UseNpgsql(connectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -32,6 +32,7 @@ namespace IdentityServer
             using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
             var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+            context.Database.EnsureDeleted();
             context.Database.Migrate();
 
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
