@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  kanbanboard:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=1234
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/certs/certificate.pfx
+    ports:
+      - "5000:443"
+      - "5001:80"
+    volumes:
+      - ../certs:/certs/:ro
+  identity_server:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=1234
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/certs/certificate.pfx
+    ports:
+      - "5443:443"
+      - "5080:80"
+    volumes:
+      - ../certs:/certs/:ro

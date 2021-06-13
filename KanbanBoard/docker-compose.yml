@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  kanbanboard:
+    image: ${DOCKER_REGISTRY-}kanbanboard
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+        - identity_server
+        - postgres
+  identity_server:
+    image: ${DOCKER_REGISTRY-}identity_server
+    build:
+      context: .
+      dockerfile: ../IdentityServer/Dockerfile
+    depends_on:
+        - postgres
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+     - '5432:5432'

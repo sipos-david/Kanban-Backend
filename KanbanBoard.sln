@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard", "KanbanBoard.csproj", "{1E8C0D42-60EA-4C8F-A6E7-A5C419AA17F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard", "KanbanBoard\KanbanBoard.csproj", "{1E8C0D42-60EA-4C8F-A6E7-A5C419AA17F6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{907BB789-85D5-4013-A1DF-E3443394C688} = {907BB789-85D5-4013-A1DF-E3443394C688}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "..\IdentityServer\IdentityServer.csproj", "{907BB789-85D5-4013-A1DF-E3443394C688}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{907BB789-85D5-4013-A1DF-E3443394C688}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "KanbanBoard\docker-compose.dcproj", "{93D7999B-8F53-4725-A9CA-5B72FE578566}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,10 @@ Global
 		{907BB789-85D5-4013-A1DF-E3443394C688}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{907BB789-85D5-4013-A1DF-E3443394C688}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{907BB789-85D5-4013-A1DF-E3443394C688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D7999B-8F53-4725-A9CA-5B72FE578566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D7999B-8F53-4725-A9CA-5B72FE578566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D7999B-8F53-4725-A9CA-5B72FE578566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D7999B-8F53-4725-A9CA-5B72FE578566}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
