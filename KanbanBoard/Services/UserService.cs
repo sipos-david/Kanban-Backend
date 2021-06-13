@@ -36,7 +36,14 @@ namespace KanbanBoard.Services
 
         public async Task<User?> RegisterUser(User user)
         {
-            return await userRepository.AddAsync(user);
+            if (await IsUserRegistered(user.Id)) 
+            {
+                return user;
+            }
+            else
+            {
+                return await userRepository.AddAsync(user);
+            }
         }
     }
 }
