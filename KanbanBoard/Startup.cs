@@ -42,12 +42,7 @@ namespace KanbanBoard
             });
 
             services.AddDbContext<KanbanBoardDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("KanbanBoardContext")));
-
-            // megzavarja a a token-t :,(
-            //services.AddIdentity<UserDto, IdentityRole>()
-            //    .AddEntityFrameworkStores<KanbanBoardDbContext>()
-            //    .AddDefaultTokenProviders();
+                options.UseNpgsql(Configuration.GetConnectionString("KanbanBoardContext")));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
