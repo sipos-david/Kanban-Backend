@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using IdentityServer4.Services;
 
 namespace IdentityServer
 {
@@ -60,6 +61,8 @@ namespace IdentityServer
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
+
+            services.AddTransient<IProfileService, Config.IdentityProfileService>();
 
             // not recommended for production - you need to store your key material somewhere secure
             //builder.AddDeveloperSigningCredential();
