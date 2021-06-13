@@ -11,6 +11,9 @@ namespace IdentityServer.Data
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseNpgsql("Server = postgres; Port=5432;Database=IdentityServer;User Id = postgres; Password=postgres;");
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
